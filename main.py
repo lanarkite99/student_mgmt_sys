@@ -51,21 +51,16 @@ class MainWindow(QMainWindow):
         self.table.cellClicked.connect(self.cell_clicked)
 
     def cell_clicked(self):
-        edit_button=QPushButton("Edit Record")
-        edit_button.clicked.connect(self.edit)
-
-        delete_button=QPushButton("Delete Record")
-        delete_button.clicked.connect(self.delete)
 
         if len(self.findChildren(QPushButton))==0:
+            edit_button = QPushButton("Edit Record")
+            edit_button.clicked.connect(self.edit)
+
+            delete_button = QPushButton("Delete Record")
+            delete_button.clicked.connect(self.delete)
+
             self.status_bar.addWidget(edit_button)
             self.status_bar.addWidget(delete_button)
-        # if children:
-        #     for child in children:
-        #         self.status_bar.removeWidget(child)
-
-        # self.status_bar.addWidget(edit_button)
-        # self.status_bar.addWidget(delete_button)
 
 
     def load_data(self):
@@ -88,10 +83,18 @@ class MainWindow(QMainWindow):
         dialog.exec()
 
     def edit(self):
+        selected_row=self.table.currentRow()
+        if selected_row==-1:
+            QMessageBox.warning(self, "No Selection", "No record selected. Please select a record to edit.")
+            return
         dialog=EditDialog()
         dialog.exec()
 
     def delete(self):
+        selected_row = self.table.currentRow()
+        if selected_row == -1:
+            QMessageBox.warning(self, "No Selection", "No record selected. Please select a record to edit.")
+            return
         dialog=DeleteDialog()
         dialog.exec()
 
