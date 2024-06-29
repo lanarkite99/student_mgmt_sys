@@ -1,5 +1,3 @@
-import sqlite3
-
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (QLabel, QApplication, QWidget, QGridLayout, QLineEdit,
                              QPushButton, QMainWindow, QTableWidget, QTableWidgetItem, QDialog,
@@ -7,6 +5,7 @@ from PyQt6.QtWidgets import (QLabel, QApplication, QWidget, QGridLayout, QLineEd
 from PyQt6.QtGui import QAction, QIcon
 import sys,sqlite3
 
+#database configuration
 def database_connection(database_file="database.db"):
         connection=sqlite3.connect(database_file)
         return connection
@@ -17,6 +16,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Student Management System")
         self.setMinimumSize(800,600)
 
+        #menu bar options
         file_menu_item=self.menuBar().addMenu("&File")
         help_menu_item=self.menuBar().addMenu("&Help")
         edit_menu_item=self.menuBar().addMenu("&Edit")
@@ -84,7 +84,7 @@ class MainWindow(QMainWindow):
 
     def edit(self):
         selected_row=self.table.currentRow()
-        if selected_row==-1:
+        if selected_row==-1:    #bug fix to disable button when no cell selected
             QMessageBox.warning(self, "No Selection", "No record selected. Please select a record to edit.")
             return
         dialog=EditDialog()
